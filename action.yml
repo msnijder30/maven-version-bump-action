@@ -24,6 +24,11 @@ inputs:
     description: 'The name to use for the version bump commit. e.g. github.actor'
     required: true
     default: github-actions[bot]
+  bump-mode:
+    description: 'The bump mode to use, none, major, minor or patch.'
+    required: true
+    default: none
+
 
 outputs:
   version:
@@ -39,6 +44,7 @@ runs:
         EMAIL: ${{ inputs.git-email }}
         NAME: ${{ inputs.git-username }}
         POMPATH: ${{ inputs.pom-path }}
+        BUMP_MODE: ${{ inputs.bump-mode }}
       run: ${{github.action_path}}/version-bump.sh
       shell: bash
     - name: Set outputs

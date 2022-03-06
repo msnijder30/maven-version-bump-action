@@ -8,6 +8,42 @@ If true, it will use Maven to bump your pom's version.
 For example, a `#minor` update to version `1.3.9` will result in the version changing to `1.4.0`.
 The change will then be committed.
 
+# Difference with original repo
+This fork makes the bump mode configurable through the input field `bump-mode` rather than looking at the previous commit.
+This can be useful if you want to create releases manually with the `workflow_dispatch` workflow.
+
+### Example usage:
+
+```yaml
+name: Release
+
+on:
+  workflow_dispatch:
+  inputs:
+    bump-mode:
+      description: 'Bump mode'
+      required: true
+      default: 'none'
+      type: choice
+      options:
+        - major
+        - minor
+        - patch
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+...
+
+    - name: Bump Version
+      id: bump
+      uses: msnijder30/maven-version-bump-action@v5
+      with:
+          github-token: ${{ secrets.github_token }}
+          bump-mode: ${{ github.event.inputs.bump-mode }}
+```
+
 ## Sample Usage
 
 ```yaml
