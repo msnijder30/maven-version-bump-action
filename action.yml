@@ -45,7 +45,7 @@ runs:
         NAME: ${{ inputs.git-username }}
         POMPATH: ${{ inputs.pom-path }}
         BUMP_MODE: ${{ inputs.bump-mode }}
-      run: ${{github.action_path}}/version-bump.sh
+      run: ${GITHUB_ACTION_PATH}/version-bump.sh
       shell: bash
     - name: Set outputs
       id: get-outputs
